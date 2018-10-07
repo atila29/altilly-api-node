@@ -1,3 +1,5 @@
+# Do not use this yet - it's being modified to work with the altilly api
+
 # hitbtc-api
 
 ## Warning -- Outdated README
