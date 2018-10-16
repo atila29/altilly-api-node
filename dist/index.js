@@ -64,12 +64,7 @@ class AltillyApi {
         this.transaction = (id, params) => this.requestPrivate(`/account/transactions/${id}`, params, `get`);
         this.key = key;
         this.secret = secret;
-        if (baseUrl) {
-            this.baseUrl = baseUrl;
-        }
-        else {
-            this.baseUrl = `https://api.altilly.com/api`;
-        }
+        this.baseUrl = baseUrl ? baseUrl : 'https://api.altilly.com/api';
     }
 }
 AltillyApi.WebsocketClient = websocketClient_1.default;

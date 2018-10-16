@@ -17,12 +17,7 @@ export default class AltillyApi {
   constructor({ key, secret, baseUrl }: IRESTParams) {
     this.key = key;
     this.secret = secret;
-
-    if (baseUrl) {
-      this.baseUrl = baseUrl;
-    } else {
-      this.baseUrl = `https://api.altilly.com/api`;
-    }
+    this.baseUrl = baseUrl ? baseUrl : 'https://api.altilly.com/api'
   }
 
   public requestPublic = (endpoint: string, params = {}) =>

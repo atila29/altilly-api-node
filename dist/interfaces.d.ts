@@ -1,6 +1,6 @@
 export interface IRESTParams {
-    key: string;
-    secret: string;
+    key?: string;
+    secret?: string;
     baseUrl?: string;
 }
 export declare type RESTMethod = "get" | "put" | "post" | "delete";
