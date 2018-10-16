@@ -14,16 +14,12 @@ const chaiAsPromised = require("chai-as-promised");
 require("chai/register-should");
 chai.use(chaiAsPromised);
 const index_1 = require("./index");
-ava_1.test("uses the demo domain when isDemo", () => __awaiter(this, void 0, void 0, function* () {
-    const client = new index_1.default({ key: "key", secret: "secret", isDemo: true });
-    client.baseUrl.should.equal("https://demo-api.hitbtc.com/api/2");
-}));
-ava_1.test("uses the production domain when not isDemo", () => __awaiter(this, void 0, void 0, function* () {
-    const client = new index_1.default({ key: "key", secret: "secret", isDemo: false });
-    client.baseUrl.should.equal("https://api.hitbtc.com/api/2");
+ava_1.test("uses the production domain", () => __awaiter(this, void 0, void 0, function* () {
+    const client = new index_1.default({ key: "key", secret: "secret" });
+    client.baseUrl.should.equal("https://api.altilly.com/api");
 }));
 ava_1.test("uses the passed baseUrl when provided", () => __awaiter(this, void 0, void 0, function* () {
-    const client = new index_1.default({ key: "key", secret: "secret", baseUrl: "http://localhost:4499/hitbtc/api" });
-    client.baseUrl.should.equal("http://localhost:4499/hitbtc/api");
+    const client = new index_1.default({ key: "key", secret: "secret", baseUrl: "example.com" });
+    client.baseUrl.should.equal("example.com");
 }));
 //# sourceMappingURL=index.test.js.map

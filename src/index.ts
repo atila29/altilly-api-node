@@ -1,5 +1,4 @@
 import axios from "axios";
-import { stringify } from "qs";
 import { path, prop } from "ramda";
 import {
   CandlePeriod,
@@ -15,15 +14,14 @@ export default class AltillyApi {
   public secret: any;
   public baseUrl: string;
 
-  constructor({ key, secret, isDemo = false, baseUrl }: IRESTParams) {
+  constructor({ key, secret, baseUrl }: IRESTParams) {
     this.key = key;
     this.secret = secret;
 
     if (baseUrl) {
       this.baseUrl = baseUrl;
     } else {
-      const subdomain = isDemo ? `demo-api` : `api`;
-      this.baseUrl = `https://${subdomain}.altilly.com/api`;
+      this.baseUrl = `https://api.altilly.com/api`;
     }
   }
 

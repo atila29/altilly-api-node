@@ -6,20 +6,15 @@ chai.use(chaiAsPromised);
 
 import HitBTC from './index';
 
-test("uses the demo domain when isDemo", async () => {
-  const client = new HitBTC({ key: "key", secret: "secret", isDemo: true });
 
-  client.baseUrl.should.equal("https://demo-api.hitbtc.com/api/2");
-});
+test("uses the production domain", async () => {
+  const client = new HitBTC({ key: "key", secret: "secret" });
 
-test("uses the production domain when not isDemo", async () => {
-  const client = new HitBTC({ key: "key", secret: "secret", isDemo: false });
-
-  client.baseUrl.should.equal("https://api.hitbtc.com/api/2");
+  client.baseUrl.should.equal("https://api.altilly.com/api");
 });
 
 test("uses the passed baseUrl when provided", async () => {
-  const client = new HitBTC({ key: "key", secret: "secret", baseUrl: "http://localhost:4499/hitbtc/api" });
+  const client = new HitBTC({ key: "key", secret: "secret", baseUrl: "example.com" });
 
-  client.baseUrl.should.equal("http://localhost:4499/hitbtc/api");
+  client.baseUrl.should.equal("example.com");
 });
