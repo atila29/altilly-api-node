@@ -9,7 +9,7 @@ import {
 } from "./interfaces";
 import WebsocketClient from "./websocketClient";
 
-export default class HitBTC {
+export default class AltillyApi {
   public static WebsocketClient = WebsocketClient;
   public key: any;
   public secret: any;
@@ -23,7 +23,7 @@ export default class HitBTC {
       this.baseUrl = baseUrl;
     } else {
       const subdomain = isDemo ? `demo-api` : `api`;
-      this.baseUrl = `https://${subdomain}.hitbtc.com/api/2`;
+      this.baseUrl = `https://${subdomain}.altilly.com/api`;
     }
   }
 
@@ -35,59 +35,59 @@ export default class HitBTC {
         throw path(["response", "data"], err);
       })
 
-  public requestPrivate = (
+  public requestPrivate = async (
     endpoint: string,
     params = {},
     method = `post` as RESTMethod,
   ) => {
     if (!this.key || !this.secret) {
       throw new Error(
-        `API key and secret key required to use authenticated methods`,
+        `API key and secret key required to use authenticated methods`
       );
     }
 
-    const config = {
-      auth: {
-        username: this.key,
-        password: this.secret,
-      },
-      params,
+    const auth = {
+      username: this.key,
+      password: this.secret,
     };
 
     const url = `${this.baseUrl}${endpoint}`;
+    
+    const response = await axios.request({url, params, method, auth})
 
-    const result =
-      method === "get" || method === "delete"
-        ? axios[method](url, config)
-        : axios[method](url, stringify(params), config);
-
-    return result.then(prop(`data`)).catch(err => {
-      throw path(["response", "data"], err);
-    });
+    return response.data;
   }
 
-  public currencies = () => this.requestPublic(`/currency`);
-
-  public currency = (curr: string) => this.requestPublic(`/currency/${curr}`);
+  // PUBLIC API CALLS
 
   public symbols = () => this.requestPublic(`/symbol`);
-
+  
   public symbol = (sym: string) => this.requestPublic(`/symbol/${sym}`);
-
+  
+  public currencies = () => this.requestPublic(`/currency`);
+  
+  public currency = (curr: string) => this.requestPublic(`/currency/${curr}`);
+  
   public tickers = () => this.requestPublic(`/ticker`);
-
+  
   public ticker = (symbol: string) => this.requestPublic(`/ticker/${symbol}`);
+  
+  public simpleTrades = (symbol: string) => this.requestPublic(`/simpletrades/${symbol}`);
 
-  public trades = (symbol: string, params: any) =>
+  public trades = (symbol: string, params: any) => 
     this.requestPublic(`/trades/${symbol}`, params)
 
   public orderbook = (symbol: string, { limit }: { limit: number }) =>
     this.requestPublic(`/orderbook/${symbol}`, { limit })
 
+  // TODO: simple order book
+  
   public candles = (
     symbol: string,
     { limit, period }: { limit: number; period: CandlePeriod },
   ) => this.requestPublic(`/candles/${symbol}`, { limit, period })
+
+  // PRIVATE API CALLS
 
   public tradingBalance = () =>
     this.requestPrivate(`/trading/balance`, {}, `get`)
