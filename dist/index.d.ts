@@ -1,19 +1,20 @@
 import { CandlePeriod, IOrder, IRESTParams, RESTMethod } from "./interfaces";
 import WebsocketClient from "./websocketClient";
-export default class HitBTC {
+export default class AltillyApi {
     static WebsocketClient: typeof WebsocketClient;
     key: any;
     secret: any;
     baseUrl: string;
-    constructor({ key, secret, isDemo, baseUrl }: IRESTParams);
+    constructor({ key, secret, baseUrl }: IRESTParams);
     requestPublic: (endpoint: string, params?: {}) => Promise<any>;
     requestPrivate: (endpoint: string, params?: {}, method?: RESTMethod) => Promise<any>;
-    currencies: () => Promise<any>;
-    currency: (curr: string) => Promise<any>;
     symbols: () => Promise<any>;
     symbol: (sym: string) => Promise<any>;
+    currencies: () => Promise<any>;
+    currency: (curr: string) => Promise<any>;
     tickers: () => Promise<any>;
     ticker: (symbol: string) => Promise<any>;
+    simpleTrades: (symbol: string) => Promise<any>;
     trades: (symbol: string, params: any) => Promise<any>;
     orderbook: (symbol: string, { limit }: {
         limit: number;
