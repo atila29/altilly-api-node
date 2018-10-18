@@ -4,17 +4,13 @@ import * as chaiAsPromised from "chai-as-promised";
 import "chai/register-should";
 chai.use(chaiAsPromised);
 
-import AltillyApi from "."
+import {PublicApi} from "."
 
 
-test("uses the production domain", async () => {
-  const client = new AltillyApi({ key: "key", secret: "secret" });
+test("public call get currency should have status 200", async () => {
+  const api = new PublicApi();
 
-  client.baseUrl.should.equal("https://api.altilly.com/api");
-});
+  const result = await api.publicCurrencyGet();
 
-test("uses the passed baseUrl when provided", async () => {
-  const client = new AltillyApi({ key: "key", secret: "secret", baseUrl: "example.com" });
-
-  client.baseUrl.should.equal("example.com");
+  result.status.should.equal(200);
 });

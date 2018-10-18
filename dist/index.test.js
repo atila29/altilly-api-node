@@ -13,13 +13,10 @@ const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 require("chai/register-should");
 chai.use(chaiAsPromised);
-const index_1 = require("./index");
-ava_1.test("uses the production domain", () => __awaiter(this, void 0, void 0, function* () {
-    const client = new index_1.default({ key: "key", secret: "secret" });
-    client.baseUrl.should.equal("https://api.altilly.com/api");
-}));
-ava_1.test("uses the passed baseUrl when provided", () => __awaiter(this, void 0, void 0, function* () {
-    const client = new index_1.default({ key: "key", secret: "secret", baseUrl: "example.com" });
-    client.baseUrl.should.equal("example.com");
+const _1 = require(".");
+ava_1.test("public call get currency should have status 200", () => __awaiter(this, void 0, void 0, function* () {
+    const api = new _1.PublicApi();
+    const result = yield api.publicCurrencyGet();
+    result.status.should.equal(200);
 }));
 //# sourceMappingURL=index.test.js.map
