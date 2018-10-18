@@ -4,7 +4,7 @@ import * as chaiAsPromised from "chai-as-promised";
 import "chai/register-should";
 chai.use(chaiAsPromised);
 
-import AltillyApi from "./index";
+import AltillyApi from "."
 
 
 test("uses the production domain", async () => {
