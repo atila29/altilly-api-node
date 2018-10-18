@@ -14,3 +14,5 @@ test("public call get currency should have status 200", async () => {
 
   result.status.should.equal(200);
 });
+
+
