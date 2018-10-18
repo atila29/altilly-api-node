@@ -25,7 +25,6 @@ import { Candle } from "./model/Candle";
 
 import { BasicBalance } from "./model/BasicBalance";
 
-import { Address } from "./model/Address";
 
 // tslint:disable
 /// <reference path="./custom.d.ts" />
@@ -45,6 +44,9 @@ import { Address } from "./model/Address";
 import * as url from "url";
 import { Configuration } from "./configuration";
 import axios, { AxiosPromise } from 'axios';
+import { DetailedBalance } from "./model/DetailedBalance";
+import { Address } from "./model/Address";
+import { WithdrawConfirm } from "./WithdrawConfirm";
 
 const BASE_PATH = "https://api.altilly.com/api".replace(/\/+$/, "");
 
@@ -297,7 +299,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delexport ete localVarUrlObj.search;
+            delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -340,7 +342,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
-                url: export url.format(localVarUrlObj),
+                url: url.format(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -392,7 +394,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         accountCryptoWithdrawIdPut(id: string, confirmCode: string, options: any = {}): RequestArgs {
-            // veriexport fy required parameter 'id' is not null or undefined
+            // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling accountCryptoWithdrawIdPut.');
             }
@@ -437,7 +439,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * Performs a withdrawal of a cryptocurrency to the requested address.  Withdrawal requests submitted via the API can only be confirmed/committed via the API.
-         * @summary Wiexport thdraw crypto
+         * @summary Withdraw crypto
          * @param {string} currency 
          * @param {string} amount 
          * @param {string} address 
@@ -447,14 +449,14 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountCryptoWithdrawPost(currencyexport : string, amount: string, address: string, paymentId?: string, includeFee?: boolean, autoCommit?: boolean, options: any = {}): RequestArgs {
+        accountCryptoWithdrawPost(currency: string, amount: string, address: string, paymentId?: string, includeFee?: boolean, autoCommit?: boolean, options: any = {}): RequestArgs {
             // verify required parameter 'currency' is not null or undefined
             if (currency === null || currency === undefined) {
                 throw new RequiredError('currency','Required parameter currency was null or undefined when calling accountCryptoWithdrawPost.');
             }
             // verify required parameter 'amount' is not null or undefined
             if (amount === null || amount === undefined) {
-                throw new RequiredError('amount','Reqexport uired parameter amount was null or undefined when calling accountCryptoWithdrawPost.');
+                throw new RequiredError('amount','Required parameter amount was null or undefined when calling accountCryptoWithdrawPost.');
             }
             // verify required parameter 'address' is not null or undefined
             if (address === null || address === undefined) {
@@ -466,7 +468,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, baseOptions, export options);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
             const localVarFormParams = new url.URLSearchParams();
@@ -516,11 +518,11 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Get account transactions (Deposits & Withexport drawals)
+         * @summary Get account transactions (Deposits & Withdrawals)
          * @param {string} [currency] 
          * @param {'DESC' | 'ASC'} [sort] Sort direction
          * @param {'timestamp'} [by] Filter field
-         export * @param {string} [from] Datetime in iso format or timestamp in millisecond.
+         * @param {string} [from] Datetime in iso format or timestamp in millisecond.
          * @param {string} [till] Datetime in iso format or timestamp in millisecond.
          * @param {number} [limit] 
          * @param {number} [offset] 
@@ -538,7 +540,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // export authentication BasicAuth required
+            // authentication BasicAuth required
             // http basic authentication required
             if (configuration && (configuration.username || configuration.password)) {
                 localVarHeaderParameter["Authorization"] = "Basic " + btoa(configuration.username + ":" + configuration.password);
@@ -573,7 +575,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://export stackoverflow.com/a/7517673/1077943
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -585,7 +587,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Get account transactions by transactionId
-         * @param {string} export transactionId 
+         * @param {string} transactionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -636,7 +638,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        accountBalanceGet(options?: any): (basePexport ath?: string) => AxiosPromise<Array<DetailedBalance>> {
+        accountBalanceGet(options?: any): (basePath?: string) => AxiosPromise<Array<DetailedBalance>> {
             const localVarAxiosArgs = AccountApiAxiosParamCreator(configuration).accountBalanceGet(options);
             return (basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(localVarAxiosArgs.options, {url: basePath + localVarAxiosArgs.url})
@@ -648,7 +650,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
          * @summary Get deposit crypro address
          * @param {string} currency 
          * @param {*} [options] Override http request option.
-         * @throws export {RequiredError}
+         * @throws {RequiredError}
          */
         accountCryptoAddressCurrencyGet(currency: string, options?: any): (basePath?: string) => AxiosPromise<Address> {
             const localVarAxiosArgs = AccountApiAxiosParamCreator(configuration).accountCryptoAddressCurrencyGet(currency, options);
@@ -659,7 +661,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Create new deposiexport t crypro address
+         * @summary Create new deposit crypro address
          * @param {string} currency 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -703,7 +705,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
         /**
          * Performs a withdrawal of a cryptocurrency to the requested address.  Withdrawal requests submitted via the API can only be confirmed/committed via the API.
          * @summary Withdraw crypto
-         * @param {stringexport } currency 
+         * @param {string} currency 
          * @param {string} amount 
          * @param {string} address 
          * @param {string} [paymentId] 
@@ -716,7 +718,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = AccountApiAxiosParamCreator(configuration).accountCryptoWithdrawPost(currency, amount, address, paymentId, includeFee, autoCommit, options);
             return (basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(localVarAxiosArgs.options, {url: basePath + localVarAxiosArgs.url})
-                return axios.request(axiosReexport questArgs);                
+                return axios.request(axiosRequestArgs);                
             };
         },
         /**
@@ -736,7 +738,7 @@ export const AccountApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = AccountApiAxiosParamCreator(configuration).accountTransactionsGet(currency, sort, by, from, till, limit, offset, options);
             return (basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(localVarAxiosArgs.options, {url: basePath + localVarAxiosArgs.url})
-                return axios.request(aexport xiosRequestArgs);                
+                return axios.request(axiosRequestArgs);                
             };
         },
         /**
@@ -764,7 +766,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * This returns available trading balance / funds held for orders / pending deposits and is a little slower than the tradingbalance call
-         * @summary Get detaiexport led acccount balance information
+         * @summary Get detailed acccount balance information
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -841,7 +843,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         accountTransactionsGet(currency?: string, sort?: 'DESC' | 'ASC', by?: 'timestamp', from?: string, till?: string, limit?: number, offset?: number, options?: any) {
-            return AccountApiFp(configuration).accountTransactionsGet(currency, sort, by, export from, till, limit, offset, options)(basePath);
+            return AccountApiFp(configuration).accountTransactionsGet(currency, sort, by, from, till, limit, offset, options)(basePath);
         },
         /**
          * 
@@ -920,7 +922,7 @@ export class AccountApi extends BaseAPI {
      * @memberof AccountApi
      */
     public accountCryptoWithdrawIdPut(id: string, confirmCode: string, options?: any) {
-        return AccountApiFp(this.configuration).accountCryptoWithdrawIdPut(id, confirmCode, options)(texport his.basePath);
+        return AccountApiFp(this.configuration).accountCryptoWithdrawIdPut(id, confirmCode, options)(this.basePath);
     }
 
     /**
@@ -946,7 +948,7 @@ export class AccountApi extends BaseAPI {
      * @param {string} [currency] 
      * @param {'DESC' | 'ASC'} [sort] Sort direction
      * @param {'timestamp'} [by] Filter field
-     * @param {string} [from] Datetime in iso format or timestamp in export millisecond.
+     * @param {string} [from] Datetime in iso format or timestamp in millisecond.
      * @param {string} [till] Datetime in iso format or timestamp in millisecond.
      * @param {number} [limit] 
      * @param {number} [offset] 
@@ -987,7 +989,7 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        publicCandlesSymbolGet(symbol: string, limit?: number, period?: '30MIN' | '3HR' | '8HR' | '12HR' | '2export 4HR', options: any = {}): RequestArgs {
+        publicCandlesSymbolGet(symbol: string, limit?: number, period?: '30MIN' | '3HR' | '8HR' | '12HR' | '24HR', options: any = {}): RequestArgs {
             // verify required parameter 'symbol' is not null or undefined
             if (symbol === null || symbol === undefined) {
                 throw new RequiredError('symbol','Required parameter symbol was null or undefined when calling publicCandlesSymbolGet.');
@@ -1072,7 +1074,7 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stexport ackoverflow.com/a/7517673/1077943
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -1135,7 +1137,7 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarPath = `/public/simpleorders/{symbol}`
                 .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            let baseOptioexport ns;
+            let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
@@ -1165,7 +1167,7 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        publicSimpletradesSymbolGet(symbol: string, since?: stexport ring, options: any = {}): RequestArgs {
+        publicSimpletradesSymbolGet(symbol: string, since?: string, options: any = {}): RequestArgs {
             // verify required parameter 'symbol' is not null or undefined
             if (symbol === null || symbol === undefined) {
                 throw new RequiredError('symbol','Required parameter symbol was null or undefined when calling publicSimpletradesSymbolGet.');
@@ -2851,5 +2853,3 @@ export class TradingHistoryApi extends BaseAPI {
     }
 
 }
-
-export export export export export export export export export export export export export export export export export export export export export export export export export export export export export export export export export export export export export export export 
